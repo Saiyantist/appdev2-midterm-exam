@@ -35,8 +35,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
 
             Route::middleware('api')
-            ->prefix('friday')
-            ->group(base_path('routes/friday.php'));
+            ->prefix('restful')
+            ->group(base_path('routes/restful.php'));
         });
     }
 
