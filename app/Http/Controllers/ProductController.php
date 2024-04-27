@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 
@@ -90,20 +91,32 @@ class ProductController extends Controller
     /**
      * HANDLE IMAGE UPLOAD from LOCAL DISK DRIVER.
      */
-    public function uploadImageLocal()
+    public function uploadImageLocal(Request $request)
     {
+        if ($request->hasFile('image')) {
+            Storage::disk('local')->put('/', $request->file('image'));
+            return response()->json([
+                'message' => 'Image successfully stored in LOCAL disk driver' ,
+            ]);
+        }
         return response()->json([
-            'message' => 'Image successfully stored in local disk driver' ,
+            'message' => 'Image not stored.' ,
         ]);
     }
 
     /**
      * HANDLE IMAGE UPLOAD from PUBLIC DISK DRIVER.
      */
-    public function uploadImagePublic()
+    public function uploadImagePublic(Request $request)
     {
+        if ($request->hasFile('image')) {
+            Storage::disk('public')->put('/', $request->file('image'));
+            return response()->json([
+                'message' => 'Image successfully stored in PUBLIC disk driver' ,
+            ]);
+        }
         return response()->json([
-            'message' => 'Image successfully stored in public disk driver' ,
+            'message' => 'Image not stored.' ,
         ]);
     }
 }
